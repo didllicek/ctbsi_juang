@@ -1,8 +1,6 @@
 function dxdt=dynamic_system(t,x,u)
 
 global inputs
-
+u;
 dxdt=inputs.Ac*x+inputs.Bc*u+inputs.Nc1*x*u(1)+inputs.Nc2*x*u(2);
-
-
 end

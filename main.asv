@@ -7,8 +7,8 @@ inputs_processing;
 %-----data used in the Juang system identification example 1-----
 p=5; %number of different multiple-pulse inputs
 forces=[1,1];
-delta_t=0.3;
-points=10; % number of time points for each record
+delta_t=1;
+points=20; % number of time points for each record
 alpha=5; %parameter to create a Hankel matrix in specific size
 beta=6; %parameter to create a Hankel matrix in specific size
 %Hankel matrix size is (alpha*m x beta*r)
@@ -26,19 +26,19 @@ for j=1:p
     for i=1:inputs.r
         u=zeros(inputs.r,1);
         u(i,1)=forces(i);
-        Yp(:,i)=generate_output_data(points,delta_t,j*delta_t,u);
-    end   
+        Yp(:,i)=generate_output_data(j*delta_t,u);
+    end    
     %legend('first','second')
 %--------generate Hankel matrix H1-------------
     if (j==1)
-        Hp=generateHankelMatrix(Yp(:,:),alpha,beta);
+        Hp=generateHankelMatrix(Yp(j:end,:),alpha,beta);
     else
         Hp=[];
         for k=j+1:(alpha+j)
             Hp=[Hp;Yp(k,:)];            
         end
     end
-    Hp
+    Hp;
     Hps{j}=Hp;
     %Hps=[Hps,(Hp)];
 end
@@ -112,13 +112,9 @@ for i=1:inputs.r
     Cm_left=Cm(:,1:(end-inputs.r));
     Cm_right=Cm(:,(inputs.r+1):(end));
     b_dashed=Cm(:,1:inputs.r);
-    Nc=((logm(Cm_right/Cm_left)/(2*delta_t))-Ac)/forces(i); % preco 2?????
+    Nc=((logm(Cm_right/Cm_left)/(2*delta_t))-Ac)/forces(i) % preco 2?????
     Ncs{i}=Nc;
-    phi*Nc/phi
-    
 end
-
-
 
 
 

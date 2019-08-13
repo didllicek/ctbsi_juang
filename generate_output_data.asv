@@ -2,7 +2,7 @@ function y = generate_output_data(points,delta_t,period,u1)
 
 global inputs
 x0=[0;0];
-t=0:delta_t:(points*delta_t-delta_t);
+t=0:delta_t:(points*delta_t);
 y=zeros(1,points);
 for i=1:(numel(t)-1) 
     if(t(i)<period)
